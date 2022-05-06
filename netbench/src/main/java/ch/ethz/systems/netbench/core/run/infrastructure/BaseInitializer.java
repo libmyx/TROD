@@ -97,12 +97,14 @@ public class BaseInitializer {
             }
 
             // If reverse not found, it is not bi-directional
+            /*
             if (!found) {
                 throw new IllegalArgumentException(
                         "Link was added which is not bi-directional: " +
                         linkPairs.get(i).getLeft() + " -> " + linkPairs.get(i).getRight()
                 );
             }
+            */
 
         }
 
