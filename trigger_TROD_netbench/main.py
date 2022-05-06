@@ -73,10 +73,24 @@ def generate_routing_file(threshold, output_path):
         for j in range(pod_num):
             if i != j:
                 #  
-                res += f'{pod_num + i},threshold,{threshold_entry_id},{threshold[i][j] * 1000000000},{pod_num + j},{pod_num - 2}'
+                # res += f'{pod_num + i},threshold,{threshold_entry_id},{threshold[i][j] * 1000000000},{pod_num + j},{pod_num - 2}'
+                # for k in range(pod_num):
+                #     if k != j and k != i:
+                #         res += f',{pod_num + k}'
+
+                res += f'{pod_num + i},threshold,{threshold_entry_id},{threshold[i][j] * 1000000000},{pod_num + j}'
                 for k in range(pod_num):
-                    if k != j and k != i:
-                        res += f',{pod_num + k}'
+                    if k != j and k != i and threshold_f[i][k]>0 and threshold_f[k][j]>0:
+                        ecmp_path+=1
+                if ecmp_path!=0:
+                    res += f',{ecmp_path}'
+                    for k in range(pod_num): 
+                        if k != j and k != i and threshold_f[i][k]>0 and threshold_f[k][j]>0:    
+                            res += f',{pod_num + k}'
+                else :
+                    res += f',1,{pod_num + j}'
+                ecmp_path=0
+
                 res += f'\n{pod_num + i},match,{i},{j},{threshold_entry_id}\n'
                 threshold_entry_id += 1
                 #  
